@@ -17,11 +17,11 @@ impl Rule for Node {
 
   fn actions(&self) -> &[Action] {
     &[
-      Action {
+      Action::Remove {
         pattern: "node_modules",
         reason: "Node dependencies",
       },
-      Action {
+      Action::Remove {
         pattern: ".angular",
         reason: "Angular cache",
       },

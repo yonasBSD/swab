@@ -17,15 +17,15 @@ impl Rule for Zig {
 
   fn actions(&self) -> &[Action] {
     &[
-      Action {
+      Action::Remove {
         pattern: "zig-cache",
         reason: "Zig cache",
       },
-      Action {
+      Action::Remove {
         pattern: ".zig-cache",
         reason: "Zig cache",
       },
-      Action {
+      Action::Remove {
         pattern: "zig-out",
         reason: "Zig build output",
       },

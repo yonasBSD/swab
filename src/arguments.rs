@@ -10,6 +10,28 @@ pub(crate) struct Arguments {
 }
 
 impl Arguments {
+  fn command(command: &'static str, root: &Path) -> Result {
+    let mut parts = command.split_whitespace();
+
+    let program = parts
+      .next()
+      .ok_or_else(|| anyhow!("Command action cannot be empty"))?;
+
+    let status = Command::new(program)
+      .args(parts)
+      .current_dir(root)
+      .status()?;
+
+    ensure!(
+      status.success(),
+      "Command '{}' failed in {}",
+      command,
+      root.display()
+    );
+
+    Ok(())
+  }
+
   pub(crate) fn run(self) -> Result {
     let mut reports = Vec::new();
 
@@ -30,11 +52,15 @@ impl Arguments {
 
           let report = Report::try_from((&context, *rule))?;
 
-          if report.items.is_empty() {
+          if report.items.is_empty() && report.commands.is_empty() {
             continue;
           }
 
           if !self.dry_run {
+            for command in &report.commands {
+              Self::command(command, &context.root)?;
+            }
+
             for item in &report.items {
               let full_path = context.root.join(&item.1);
 

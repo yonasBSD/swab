@@ -47,7 +47,12 @@ impl Context {
     let mut matches = HashSet::new();
 
     for action in rule.actions() {
-      let matcher = Glob::new(action.pattern)?.compile_matcher();
+      let pattern = match action {
+        Action::Remove { pattern, .. } => pattern,
+        Action::Command(_) => continue,
+      };
+
+      let matcher = Glob::new(pattern)?.compile_matcher();
 
       for path in self.directories.iter().chain(self.files.iter()) {
         if matcher.is_match(path) {

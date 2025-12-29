@@ -1,6 +1,9 @@
 #[derive(Debug)]
-pub(crate) struct Action {
-  pub(crate) pattern: &'static str,
-  #[allow(unused)]
-  pub(crate) reason: &'static str,
+#[allow(unused)]
+pub(crate) enum Action {
+  Command(&'static str),
+  Remove {
+    pattern: &'static str,
+    reason: &'static str,
+  },
 }
