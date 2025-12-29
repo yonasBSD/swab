@@ -7,8 +7,8 @@ macro_rules! define_rule {
     $name:ident {
       id: $id:literal,
       name: $rule_name:literal,
-      actions: [$($action:expr),* $(,)?],
-      detection: $detection:expr $(,)?
+      detection: $detection:expr,
+      actions: [$($action:expr),* $(,)?] $(,)?
     }
   ) => {
     $(#[$doc])*

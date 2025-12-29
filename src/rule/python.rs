@@ -4,6 +4,7 @@ define_rule! {
   Python {
     id: "python",
     name: "Python",
+    detection: Detection::Pattern("pyproject.toml"),
     actions: [
       Action::Remove(".mypy_cache"),
       Action::Remove(".nox"),
@@ -14,6 +15,5 @@ define_rule! {
       Action::Remove("__pycache__"),
       Action::Remove("__pypackages__"),
     ],
-    detection: Detection::Pattern("pyproject.toml")
   }
 }

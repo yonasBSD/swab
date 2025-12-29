@@ -4,6 +4,7 @@ define_rule! {
   Unreal {
     id: "unreal",
     name: "Unreal Engine",
+    detection: Detection::Pattern("**/*.uproject"),
     actions: [
       Action::Remove("Binaries"),
       Action::Remove("Build"),
@@ -11,6 +12,5 @@ define_rule! {
       Action::Remove("DerivedDataCache"),
       Action::Remove("Intermediate"),
     ],
-    detection: Detection::Pattern("**/*.uproject")
   }
 }

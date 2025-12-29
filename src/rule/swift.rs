@@ -4,10 +4,10 @@ define_rule! {
   Swift {
     id: "swift",
     name: "Swift",
+    detection: Detection::Pattern("Package.swift"),
     actions: [
       Action::Remove(".build"),
       Action::Remove(".swiftpm"),
     ],
-    detection: Detection::Pattern("Package.swift")
   }
 }

@@ -4,10 +4,6 @@ define_rule! {
   Dotnet {
     id: "dotnet",
     name: ".NET",
-    actions: [
-      Action::Remove("bin"),
-      Action::Remove("obj"),
-    ],
     detection: Detection::All(
       Box::new(Detection::Any(
         Box::new(Detection::Pattern("**/*.csproj")),
@@ -17,6 +13,10 @@ define_rule! {
         Box::new(Detection::Not(Box::new(Detection::Pattern("Assembly-CSharp.csproj")))),
         Box::new(Detection::Not(Box::new(Detection::Pattern("project.godot")))),
       )),
-    )
+    ),
+    actions: [
+      Action::Remove("bin"),
+      Action::Remove("obj"),
+    ],
   }
 }

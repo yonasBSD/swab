@@ -4,6 +4,7 @@ define_rule! {
   Unity {
     id: "unity",
     name: "Unity",
+    detection: Detection::Pattern("Assembly-CSharp.csproj"),
     actions: [
       Action::Remove("Library"),
       Action::Remove("Temp"),
@@ -13,6 +14,5 @@ define_rule! {
       Action::Remove("Build"),
       Action::Remove("Builds"),
     ],
-    detection: Detection::Pattern("Assembly-CSharp.csproj")
   }
 }
