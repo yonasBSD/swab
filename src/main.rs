@@ -18,7 +18,7 @@ use {
     fs,
     io::{self, IsTerminal, Write},
     path::{Path, PathBuf},
-    process,
+    process::{self, Command},
     str::FromStr,
     time::{Duration, SystemTime},
   },

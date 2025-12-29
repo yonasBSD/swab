@@ -16,7 +16,7 @@ impl Task {
           .next()
           .ok_or_else(|| anyhow!("command action cannot be empty"))?;
 
-        let status = process::Command::new(program)
+        let status = Command::new(program)
           .args(parts)
           .current_dir(context.root.clone())
           .status()?;
