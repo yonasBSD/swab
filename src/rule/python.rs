@@ -15,7 +15,7 @@ define_rule! {
       Action::Remove("__pypackages__"),
     ],
     applies(context) {
-      context.has_file_with_extension("py")
+      context.files.contains(&PathBuf::from("pyproject.toml"))
     }
   }
 }
