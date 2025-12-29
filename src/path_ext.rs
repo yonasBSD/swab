@@ -1,10 +1,29 @@
 use super::*;
 
 pub(crate) trait PathExt {
+  fn directories(&self) -> Result<Vec<PathBuf>>;
   fn size(&self) -> Result<u64>;
 }
 
 impl PathExt for Path {
+  fn directories(&self) -> Result<Vec<PathBuf>> {
+    let mut directories = Vec::new();
+
+    for entry in fs::read_dir(self)? {
+      let entry = entry?;
+
+      let path = entry.path();
+
+      if path.is_dir() {
+        directories.push(path);
+      }
+    }
+
+    directories.sort_unstable();
+
+    Ok(directories)
+  }
+
   fn size(&self) -> Result<u64> {
     let metadata = fs::metadata(self)?;
 

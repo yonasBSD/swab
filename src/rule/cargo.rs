@@ -17,7 +17,7 @@ impl Rule for Cargo {
 
   fn actions(&self) -> &[Action] {
     &[Action {
-      pattern: "target",
+      pattern: "**/target",
       reason: "Cargo build artifacts",
     }]
   }
