@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove("target"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("pom.xml"))
+      context.contains("pom.xml")
     }
   }
 }

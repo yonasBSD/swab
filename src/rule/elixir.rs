@@ -11,7 +11,7 @@ define_rule! {
       Action::Remove(".lexical"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("mix.exs"))
+      context.contains("mix.exs")
     }
   }
 }

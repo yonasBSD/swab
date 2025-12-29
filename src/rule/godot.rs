@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove(".godot"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("project.godot"))
+      context.contains("project.godot")
     }
   }
 }

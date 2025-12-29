@@ -42,12 +42,17 @@ impl TryFrom<PathBuf> for Context {
 }
 
 impl Context {
-  pub(crate) fn has_file_with_extension(&self, extension: &str) -> bool {
-    self.files.iter().any(|file| {
-      file
-        .extension()
-        .is_some_and(|candidate_extension| candidate_extension == extension)
-    })
+  pub(crate) fn contains(&self, pattern: &str) -> bool {
+    let matcher = match Glob::new(pattern) {
+      Ok(glob) => glob.compile_matcher(),
+      Err(_) => return false,
+    };
+
+    self
+      .directories
+      .iter()
+      .chain(self.files.iter())
+      .any(|path| matcher.is_match(path))
   }
 
   pub(crate) fn matches(&self, rule: &dyn Rule) -> Result<Vec<PathBuf>> {
@@ -226,5 +231,23 @@ mod tests {
         PathBuf::from("target"),
       ],
     );
+  }
+
+  #[test]
+  fn contains_matches_globs() {
+    let tree = temptree! {
+      "pyproject.toml": "",
+      "notebooks": {
+        "analysis.ipynb": "",
+      },
+      "target": {},
+    };
+
+    let context = Context::try_from(tree.path().to_path_buf()).unwrap();
+
+    assert!(context.contains("pyproject.toml"));
+    assert!(context.contains("**/*.ipynb"));
+    assert!(context.contains("target"));
+    assert!(!context.contains("nope.toml"));
   }
 }

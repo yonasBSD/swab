@@ -9,7 +9,7 @@ define_rule! {
       Action::Remove(".swiftpm"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("Package.swift"))
+      context.contains("Package.swift")
     }
   }
 }

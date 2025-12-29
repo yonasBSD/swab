@@ -9,7 +9,7 @@ define_rule! {
       Action::Remove("project/target"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("build.sbt"))
+      context.contains("build.sbt")
     }
   }
 }

@@ -11,7 +11,7 @@ define_rule! {
       Action::Remove("windows/flutter/ephemeral"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("pubspec.yaml"))
+      context.contains("pubspec.yaml")
     }
   }
 }

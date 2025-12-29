@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove(".turbo"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("turbo.json"))
+      context.contains("turbo.json")
     }
   }
 }

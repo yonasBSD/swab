@@ -9,10 +9,10 @@ define_rule! {
       Action::Remove("obj"),
     ],
     applies(context) {
-      (context.has_file_with_extension("csproj")
-        || context.has_file_with_extension("fsproj"))
-        && !context.files.contains(&PathBuf::from("Assembly-CSharp.csproj"))
-        && !context.files.contains(&PathBuf::from("project.godot"))
+      (context.contains("**/*.csproj")
+        || context.contains("**/*.fsproj"))
+        && !context.contains("Assembly-CSharp.csproj")
+        && !context.contains("project.godot")
     }
   }
 }

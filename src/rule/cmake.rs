@@ -10,7 +10,7 @@ define_rule! {
       Action::Remove("cmake-build-release"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("CMakeLists.txt"))
+      context.contains("CMakeLists.txt")
     }
   }
 }

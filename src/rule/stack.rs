@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove(".stack-work"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("stack.yaml"))
+      context.contains("stack.yaml")
     }
   }
 }

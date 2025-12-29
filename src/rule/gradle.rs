@@ -9,8 +9,8 @@ define_rule! {
       Action::Remove(".gradle"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("build.gradle"))
-        || context.files.contains(&PathBuf::from("build.gradle.kts"))
+      context.contains("build.gradle")
+        || context.contains("build.gradle.kts")
     }
   }
 }

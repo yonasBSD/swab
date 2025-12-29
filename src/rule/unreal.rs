@@ -12,7 +12,7 @@ define_rule! {
       Action::Remove("Intermediate"),
     ],
     applies(context) {
-      context.has_file_with_extension("uproject")
+      context.contains("**/*.uproject")
     }
   }
 }

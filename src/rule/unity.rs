@@ -14,7 +14,7 @@ define_rule! {
       Action::Remove("Builds"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("Assembly-CSharp.csproj"))
+      context.contains("Assembly-CSharp.csproj")
     }
   }
 }

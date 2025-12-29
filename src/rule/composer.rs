@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove("vendor"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("composer.json"))
+      context.contains("composer.json")
     }
   }
 }

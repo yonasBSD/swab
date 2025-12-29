@@ -10,7 +10,7 @@ define_rule! {
       Action::Remove("zig-out"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("build.zig"))
+      context.contains("build.zig")
     }
   }
 }

@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove("**/.ipynb_checkpoints"),
     ],
     applies(context) {
-      context.has_file_with_extension("ipynb")
+      context.contains("**/*.ipynb")
     }
   }
 }

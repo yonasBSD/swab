@@ -15,7 +15,7 @@ define_rule! {
       Action::Remove("__pypackages__"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("pyproject.toml"))
+      context.contains("pyproject.toml")
     }
   }
 }

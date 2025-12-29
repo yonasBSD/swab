@@ -8,7 +8,7 @@ define_rule! {
       Action::Remove(".pixi"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("pixi.toml"))
+      context.contains("pixi.toml")
     }
   }
 }

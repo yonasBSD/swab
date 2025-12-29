@@ -9,7 +9,7 @@ define_rule! {
       Action::Remove(".angular"),
     ],
     applies(context) {
-      context.files.contains(&PathBuf::from("package.json"))
+      context.contains("package.json")
     }
   }
 }
