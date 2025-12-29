@@ -15,7 +15,7 @@ use {
     env,
     fmt::{self, Display, Formatter},
     fs,
-    io::{self, IsTerminal},
+    io::{self, IsTerminal, Write},
     path::{Path, PathBuf},
     process::{self, Command},
     str::FromStr,

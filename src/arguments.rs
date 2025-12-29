@@ -39,7 +39,8 @@ impl Arguments {
   pub(crate) fn run(self) -> Result {
     let style = Style::stdout();
 
-    let mut reports = Vec::new();
+    let mut total_bytes = 0;
+    let mut total_projects = 0usize;
 
     for root in self.directories {
       ensure!(
@@ -82,18 +83,14 @@ impl Arguments {
             }
           }
 
-          reports.push(report);
+          print!("{report}");
+          io::stdout().flush()?;
+
+          total_bytes += report.bytes;
+          total_projects += 1;
         }
       }
     }
-
-    for report in &reports {
-      print!("{report}");
-    }
-
-    let total_bytes = reports.iter().map(|report| report.bytes).sum();
-
-    let total_projects = reports.len();
 
     if self.dry_run {
       println!(
