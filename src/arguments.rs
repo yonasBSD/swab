@@ -11,6 +11,8 @@ pub(crate) struct Arguments {
   directories: Vec<PathBuf>,
   #[clap(long, help = "Enable dry run mode")]
   dry_run: bool,
+  #[clap(long, help = "Follow symlinks during traversal")]
+  follow_symlinks: bool,
   #[clap(short, long, help = "Prompt before each task")]
   interactive: bool,
 }
@@ -31,7 +33,7 @@ impl Arguments {
       );
 
       for directory in root.directories()? {
-        let context = Context::try_from(directory)?;
+        let context = Context::new(directory, self.follow_symlinks)?;
 
         for rule in RULES {
           if !rule.detection().matches(&context) {

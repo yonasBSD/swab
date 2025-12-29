@@ -2,7 +2,7 @@ use super::*;
 
 pub(crate) trait PathExt {
   fn directories(&self) -> Result<Vec<PathBuf>>;
-  fn size(&self) -> Result<u64>;
+  fn size(&self, follow_symlinks: bool) -> Result<u64>;
 }
 
 impl PathExt for Path {
@@ -24,7 +24,7 @@ impl PathExt for Path {
     Ok(directories)
   }
 
-  fn size(&self) -> Result<u64> {
+  fn size(&self, follow_symlinks: bool) -> Result<u64> {
     let metadata = fs::metadata(self)?;
 
     if metadata.is_file() {
@@ -37,7 +37,7 @@ impl PathExt for Path {
 
     let mut total = 0;
 
-    for entry in WalkDir::new(self).follow_links(false) {
+    for entry in WalkDir::new(self).follow_links(follow_symlinks) {
       let entry = entry?;
 
       if entry.file_type().is_file() {
@@ -71,7 +71,7 @@ mod tests {
         self
           .target
           .expect("target must be set for error test")
-          .size()
+          .size(false)
           .is_err()
       );
     }
@@ -101,7 +101,7 @@ mod tests {
         self
           .target
           .unwrap_or_else(|| self.tempdir.path().to_path_buf())
-          .size()
+          .size(false)
           .unwrap(),
         self.expected_size.expect("expected size must be set")
       );

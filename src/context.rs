@@ -4,16 +4,15 @@ use super::*;
 pub(crate) struct Context {
   pub(crate) directories: HashSet<PathBuf>,
   pub(crate) files: HashSet<PathBuf>,
+  pub(crate) follow_symlinks: bool,
   pub(crate) root: PathBuf,
 }
 
-impl TryFrom<PathBuf> for Context {
-  type Error = Error;
-
-  fn try_from(value: PathBuf) -> Result<Self> {
+impl Context {
+  pub(crate) fn new(root: PathBuf, follow_symlinks: bool) -> Result<Self> {
     let (mut directories, mut files) = (HashSet::new(), HashSet::new());
 
-    for entry in WalkDir::new(&value).follow_links(false) {
+    for entry in WalkDir::new(&root).follow_links(follow_symlinks) {
       let entry = entry?;
 
       if entry.depth() == 0 {
@@ -22,7 +21,7 @@ impl TryFrom<PathBuf> for Context {
 
       let relative = entry
         .path()
-        .strip_prefix(&value)
+        .strip_prefix(&root)
         .unwrap_or(entry.path())
         .to_path_buf();
 
@@ -36,7 +35,8 @@ impl TryFrom<PathBuf> for Context {
     Ok(Self {
       directories,
       files,
-      root: value,
+      follow_symlinks,
+      root,
     })
   }
 }
@@ -128,7 +128,7 @@ impl Context {
     for relative_path in self.matches(rule)? {
       let full_path = self.root.join(&relative_path);
 
-      let bytes = full_path.size()?;
+      let bytes = full_path.size(self.follow_symlinks)?;
 
       total_bytes += bytes;
 
@@ -180,7 +180,7 @@ mod tests {
       "README.md": "hello",
     };
 
-    let context = Context::try_from(tree.path().to_path_buf()).unwrap();
+    let context = Context::new(tree.path().to_path_buf(), false).unwrap();
 
     let rule = TestRule {
       actions: &[Action::Remove("nope/**")],
@@ -196,7 +196,7 @@ mod tests {
       "a.log": "a",
     };
 
-    let context = Context::try_from(tree.path().to_path_buf()).unwrap();
+    let context = Context::new(tree.path().to_path_buf(), false).unwrap();
 
     let rule = TestRule {
       actions: &[Action::Remove("*.log")],
@@ -216,7 +216,7 @@ mod tests {
 
     let root = tree.path();
 
-    let context = Context::try_from(root.to_path_buf()).unwrap();
+    let context = Context::new(root.to_path_buf(), false).unwrap();
 
     fs::remove_file(root.join("stale.log")).unwrap();
 
@@ -243,7 +243,7 @@ mod tests {
       "README.md": "hello",
     };
 
-    let context = Context::try_from(tree.path().to_path_buf()).unwrap();
+    let context = Context::new(tree.path().to_path_buf(), false).unwrap();
 
     let rule = TestRule {
       actions: &[
