@@ -15,7 +15,7 @@ impl Arguments {
 
     let program = parts
       .next()
-      .ok_or_else(|| anyhow!("Command action cannot be empty"))?;
+      .ok_or_else(|| anyhow!("command action cannot be empty"))?;
 
     let status = Command::new(program)
       .args(parts)
@@ -24,7 +24,7 @@ impl Arguments {
 
     ensure!(
       status.success(),
-      "Command '{}' failed in {}",
+      "command `{}` failed in `{}`",
       command,
       root.display()
     );

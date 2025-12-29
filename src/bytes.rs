@@ -1,8 +1,4 @@
 use super::*;
-use std::{
-  fmt::{self, Display, Formatter},
-  str::FromStr,
-};
 
 const KI: u64 = 1 << 10;
 const MI: u64 = KI << 10;

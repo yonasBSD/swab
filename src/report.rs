@@ -44,6 +44,7 @@ impl Display for Report {
 
     for (index, command) in self.commands.iter().enumerate() {
       let entry_index = self.items.len() + index;
+
       let branch = if entry_index + 1 == total_entries {
         "└─"
       } else {

@@ -18,6 +18,7 @@ use {
     io::{self, IsTerminal},
     path::{Path, PathBuf},
     process::{self, Command},
+    str::FromStr,
     time::{Duration, SystemTime},
   },
   style::{BOLD, CYAN, DIM, GREEN, Style, YELLOW},
