@@ -1,6 +1,6 @@
 use super::*;
 
-static RULES: &[&dyn Rule] = &[&Cargo];
+static RULES: &[&dyn Rule] = &[&Cargo, &Node];
 
 #[derive(Debug, Parser)]
 pub(crate) struct Arguments {

@@ -1,8 +1,9 @@
 use super::*;
 
-pub(crate) use cargo::Cargo;
+pub(crate) use {cargo::Cargo, node::Node};
 
 mod cargo;
+mod node;
 
 pub(crate) trait Rule: Sync {
   /// A unique identifier for the rule.
