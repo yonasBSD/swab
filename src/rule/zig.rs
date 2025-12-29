@@ -5,18 +5,9 @@ define_rule! {
     id: "zig",
     name: "Zig",
     actions: [
-      Action::Remove {
-        pattern: "zig-cache",
-        reason: "Zig cache",
-      },
-      Action::Remove {
-        pattern: ".zig-cache",
-        reason: "Zig cache",
-      },
-      Action::Remove {
-        pattern: "zig-out",
-        reason: "Zig build output",
-      },
+      Action::Remove("zig-cache"),
+      Action::Remove(".zig-cache"),
+      Action::Remove("zig-out"),
     ],
     applies(context) {
       context.files.contains(&PathBuf::from("build.zig"))

@@ -47,7 +47,7 @@ impl Context {
       .actions()
       .iter()
       .filter_map(|action| match action {
-        Action::Remove { pattern, .. } => Some(pattern),
+        Action::Remove(pattern) => Some(pattern),
         Action::Command(_) => None,
       })
       .map(|pattern| Ok(Glob::new(pattern)?.compile_matcher()))
@@ -137,10 +137,7 @@ mod tests {
     let context = Context::try_from(tree.path().to_path_buf()).unwrap();
 
     let rule = TestRule {
-      actions: &[Action::Remove {
-        pattern: "nope/**",
-        reason: "test",
-      }],
+      actions: &[Action::Remove("nope/**")],
     };
 
     assert!(context.matches(&rule).unwrap().is_empty());
@@ -156,10 +153,7 @@ mod tests {
     let context = Context::try_from(tree.path().to_path_buf()).unwrap();
 
     let rule = TestRule {
-      actions: &[Action::Remove {
-        pattern: "*.log",
-        reason: "test",
-      }],
+      actions: &[Action::Remove("*.log")],
     };
 
     assert_eq!(
@@ -181,10 +175,7 @@ mod tests {
     fs::remove_file(root.join("stale.log")).unwrap();
 
     let rule = TestRule {
-      actions: &[Action::Remove {
-        pattern: "*.log",
-        reason: "test",
-      }],
+      actions: &[Action::Remove("*.log")],
     };
 
     assert!(context.matches(&rule).unwrap().is_empty());
@@ -210,26 +201,11 @@ mod tests {
 
     let rule = TestRule {
       actions: &[
-        Action::Remove {
-          pattern: "node_modules",
-          reason: "test",
-        },
-        Action::Remove {
-          pattern: "node_modules/**",
-          reason: "test",
-        },
-        Action::Remove {
-          pattern: "target",
-          reason: "test",
-        },
-        Action::Remove {
-          pattern: "target/**",
-          reason: "test",
-        },
-        Action::Remove {
-          pattern: "*.md",
-          reason: "test",
-        },
+        Action::Remove("node_modules"),
+        Action::Remove("node_modules/**"),
+        Action::Remove("target"),
+        Action::Remove("target/**"),
+        Action::Remove("*.md"),
         Action::Command("echo ignored"),
       ],
     };

@@ -5,14 +5,8 @@ define_rule! {
     id: "node",
     name: "Node",
     actions: [
-      Action::Remove {
-        pattern: "node_modules",
-        reason: "Node dependencies",
-      },
-      Action::Remove {
-        pattern: ".angular",
-        reason: "Angular cache",
-      },
+      Action::Remove("node_modules"),
+      Action::Remove(".angular"),
     ],
     applies(context) {
       context.files.contains(&PathBuf::from("package.json"))
