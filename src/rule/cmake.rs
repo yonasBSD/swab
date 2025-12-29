@@ -9,8 +9,6 @@ define_rule! {
       Action::Remove("cmake-build-debug"),
       Action::Remove("cmake-build-release"),
     ],
-    applies(context) {
-      context.contains("CMakeLists.txt")
-    }
+    detection: Pattern("CMakeLists.txt")
   }
 }

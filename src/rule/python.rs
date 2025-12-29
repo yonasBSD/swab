@@ -14,8 +14,6 @@ define_rule! {
       Action::Remove("__pycache__"),
       Action::Remove("__pypackages__"),
     ],
-    applies(context) {
-      context.contains("pyproject.toml")
-    }
+    detection: Pattern("pyproject.toml")
   }
 }

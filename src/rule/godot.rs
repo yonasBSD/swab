@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".godot"),
     ],
-    applies(context) {
-      context.contains("project.godot")
-    }
+    detection: Pattern("project.godot")
   }
 }

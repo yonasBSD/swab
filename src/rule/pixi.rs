@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".pixi"),
     ],
-    applies(context) {
-      context.contains("pixi.toml")
-    }
+    detection: Pattern("pixi.toml")
   }
 }

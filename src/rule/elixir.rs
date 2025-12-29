@@ -10,8 +10,6 @@ define_rule! {
       Action::Remove(".elixir_ls"),
       Action::Remove(".lexical"),
     ],
-    applies(context) {
-      context.contains("mix.exs")
-    }
+    detection: Pattern("mix.exs")
   }
 }

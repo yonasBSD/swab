@@ -5,12 +5,12 @@ define_rule! {
     id: "gradle",
     name: "Gradle",
     actions: [
-      Action::Remove("build"),
-      Action::Remove(".gradle"),
+      Remove("build"),
+      Remove(".gradle"),
     ],
-    applies(context) {
-      context.contains("build.gradle")
-        || context.contains("build.gradle.kts")
-    }
+    detection: Any(
+      Box::new(Pattern("build.gradle")),
+      Box::new(Pattern("build.gradle.kts")),
+    )
   }
 }

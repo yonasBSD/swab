@@ -9,8 +9,6 @@ define_rule! {
       Action::Remove(".zig-cache"),
       Action::Remove("zig-out"),
     ],
-    applies(context) {
-      context.contains("build.zig")
-    }
+    detection: Pattern("build.zig")
   }
 }

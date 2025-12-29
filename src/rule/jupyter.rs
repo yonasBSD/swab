@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("**/.ipynb_checkpoints"),
     ],
-    applies(context) {
-      context.contains("**/*.ipynb")
-    }
+    detection: Pattern("**/*.ipynb")
   }
 }

@@ -1,6 +1,6 @@
 #[derive(Debug)]
-#[allow(unused)]
 pub(crate) enum Action {
+  #[allow(unused)]
   Command(&'static str),
   Remove(&'static str),
 }

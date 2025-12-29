@@ -113,6 +113,39 @@ impl Context {
   pub(crate) fn modified_time(&self) -> Result<SystemTime> {
     Ok(fs::metadata(&self.root)?.modified()?)
   }
+
+  pub(crate) fn report(&self, rule: &dyn Rule) -> Result<Report> {
+    let mut tasks = Vec::new();
+
+    let mut total_bytes = 0;
+
+    for action in rule.actions() {
+      if let Action::Command(command) = action {
+        tasks.push(Task::Command(command));
+      }
+    }
+
+    for relative_path in self.matches(rule)? {
+      let full_path = self.root.join(&relative_path);
+
+      let bytes = full_path.size()?;
+
+      total_bytes += bytes;
+
+      tasks.push(Task::Removal {
+        path: relative_path,
+        size: bytes,
+      });
+    }
+
+    Ok(Report {
+      bytes: total_bytes,
+      modified: self.modified_time()?,
+      root: self.root.clone(),
+      rule_name: rule.name().to_string(),
+      tasks,
+    })
+  }
 }
 
 #[cfg(test)]
@@ -128,8 +161,8 @@ mod tests {
       self.actions
     }
 
-    fn applies(&self, _context: &Context) -> bool {
-      true
+    fn detection(&self) -> Detection<'static> {
+      Pattern("**")
     }
 
     fn id(&self) -> &'static str {
@@ -231,23 +264,5 @@ mod tests {
         PathBuf::from("target"),
       ],
     );
-  }
-
-  #[test]
-  fn contains_matches_globs() {
-    let tree = temptree! {
-      "pyproject.toml": "",
-      "notebooks": {
-        "analysis.ipynb": "",
-      },
-      "target": {},
-    };
-
-    let context = Context::try_from(tree.path().to_path_buf()).unwrap();
-
-    assert!(context.contains("pyproject.toml"));
-    assert!(context.contains("**/*.ipynb"));
-    assert!(context.contains("target"));
-    assert!(!context.contains("nope.toml"));
   }
 }

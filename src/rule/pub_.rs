@@ -10,8 +10,6 @@ define_rule! {
       Action::Remove("linux/flutter/ephemeral"),
       Action::Remove("windows/flutter/ephemeral"),
     ],
-    applies(context) {
-      context.contains("pubspec.yaml")
-    }
+    detection: Pattern("pubspec.yaml")
   }
 }

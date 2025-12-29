@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("**/target"),
     ],
-    applies(context) {
-      context.contains("Cargo.toml")
-    }
+    detection: Pattern("Cargo.toml")
   }
 }

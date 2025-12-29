@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".stack-work"),
     ],
-    applies(context) {
-      context.contains("stack.yaml")
-    }
+    detection: Pattern("stack.yaml")
   }
 }

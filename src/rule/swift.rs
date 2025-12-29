@@ -8,8 +8,6 @@ define_rule! {
       Action::Remove(".build"),
       Action::Remove(".swiftpm"),
     ],
-    applies(context) {
-      context.contains("Package.swift")
-    }
+    detection: Pattern("Package.swift")
   }
 }

@@ -8,8 +8,6 @@ define_rule! {
       Action::Remove("**/node_modules"),
       Action::Remove(".angular"),
     ],
-    applies(context) {
-      context.contains("package.json")
-    }
+    detection: Pattern("package.json")
   }
 }

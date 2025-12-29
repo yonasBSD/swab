@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("vendor"),
     ],
-    applies(context) {
-      context.contains("composer.json")
-    }
+    detection: Pattern("composer.json")
   }
 }

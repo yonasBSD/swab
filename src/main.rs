@@ -1,10 +1,11 @@
 use {
-  action::Action,
+  action::Action::{self, *},
   anyhow::{Error, anyhow, bail, ensure},
   arguments::Arguments,
   bytes::Bytes,
   clap::Parser,
   context::Context,
+  detection::Detection::{self, *},
   globset::Glob,
   path_ext::PathExt,
   report::Report,
@@ -17,12 +18,13 @@ use {
     fs,
     io::{self, IsTerminal, Write},
     path::{Path, PathBuf},
-    process::{self, Command},
+    process,
     str::FromStr,
     time::{Duration, SystemTime},
   },
   style::{BOLD, CYAN, DIM, GREEN, Style, YELLOW},
   system_time_ext::SystemTimeExt,
+  task::Task,
   walkdir::WalkDir,
 };
 
@@ -30,11 +32,13 @@ mod action;
 mod arguments;
 mod bytes;
 mod context;
+mod detection;
 mod path_ext;
 mod report;
 mod rule;
 mod style;
 mod system_time_ext;
+mod task;
 
 type Result<T = (), E = Error> = std::result::Result<T, E>;
 

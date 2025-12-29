@@ -8,7 +8,7 @@ macro_rules! define_rule {
       id: $id:literal,
       name: $rule_name:literal,
       actions: [$($action:expr),* $(,)?],
-      applies($context:ident) $body:block $(,)?
+      detection: $detection:expr $(,)?
     }
   ) => {
     $(#[$doc])*
@@ -19,8 +19,8 @@ macro_rules! define_rule {
         &[$($action),*]
       }
 
-      fn applies(&self, $context: &$crate::context::Context) -> bool {
-        $body
+      fn detection(&self) -> $crate::detection::Detection<'static> {
+        $detection
       }
 
       fn id(&self) -> &'static str {
@@ -67,8 +67,8 @@ pub(crate) trait Rule: Sync {
   /// A description of what the rule does.
   fn actions(&self) -> &[Action];
 
-  /// Determines if the rule applies to the given context.
-  fn applies(&self, context: &Context) -> bool;
+  /// Builds a detection used to evaluate a context.
+  fn detection(&self) -> Detection<'static>;
 
   /// A unique identifier for the rule.
   #[allow(unused)]

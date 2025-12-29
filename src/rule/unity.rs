@@ -13,8 +13,6 @@ define_rule! {
       Action::Remove("Build"),
       Action::Remove("Builds"),
     ],
-    applies(context) {
-      context.contains("Assembly-CSharp.csproj")
-    }
+    detection: Pattern("Assembly-CSharp.csproj")
   }
 }

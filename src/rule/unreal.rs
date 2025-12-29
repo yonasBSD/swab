@@ -11,8 +11,6 @@ define_rule! {
       Action::Remove("DerivedDataCache"),
       Action::Remove("Intermediate"),
     ],
-    applies(context) {
-      context.contains("**/*.uproject")
-    }
+    detection: Pattern("**/*.uproject")
   }
 }

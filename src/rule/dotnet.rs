@@ -8,11 +8,15 @@ define_rule! {
       Action::Remove("bin"),
       Action::Remove("obj"),
     ],
-    applies(context) {
-      (context.contains("**/*.csproj")
-        || context.contains("**/*.fsproj"))
-        && !context.contains("Assembly-CSharp.csproj")
-        && !context.contains("project.godot")
-    }
+    detection: All(
+      Box::new(Any(
+        Box::new(Pattern("**/*.csproj")),
+        Box::new(Pattern("**/*.fsproj")),
+      )),
+      Box::new(All(
+        Box::new(Not(Box::new(Pattern("Assembly-CSharp.csproj")))),
+        Box::new(Not(Box::new(Pattern("project.godot")))),
+      )),
+    )
   }
 }

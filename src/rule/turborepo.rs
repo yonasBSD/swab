@@ -7,8 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".turbo"),
     ],
-    applies(context) {
-      context.contains("turbo.json")
-    }
+    detection: Pattern("turbo.json")
   }
 }

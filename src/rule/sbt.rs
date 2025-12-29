@@ -8,8 +8,6 @@ define_rule! {
       Action::Remove("target"),
       Action::Remove("project/target"),
     ],
-    applies(context) {
-      context.contains("build.sbt")
-    }
+    detection: Pattern("build.sbt")
   }
 }
