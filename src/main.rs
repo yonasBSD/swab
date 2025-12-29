@@ -6,6 +6,7 @@ use {
   clap::Parser,
   context::Context,
   detection::Detection,
+  dialoguer::{Confirm, theme::ColorfulTheme},
   globset::Glob,
   path_ext::PathExt,
   report::Report,

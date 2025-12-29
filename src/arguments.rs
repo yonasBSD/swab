@@ -11,11 +11,14 @@ pub(crate) struct Arguments {
   directories: Vec<PathBuf>,
   #[clap(long, help = "Enable dry run mode")]
   dry_run: bool,
+  #[clap(short, long, help = "Prompt before each task")]
+  interactive: bool,
 }
 
 impl Arguments {
   pub(crate) fn run(self) -> Result {
     let style = Style::stdout();
+    let prompt_theme = ColorfulTheme::default();
 
     let mut total_bytes = 0;
     let mut total_projects = 0usize;
@@ -41,17 +44,54 @@ impl Arguments {
             continue;
           }
 
-          if !self.dry_run {
-            for task in &report.tasks {
-              task.execute(&context)?;
-            }
-          }
-
           print!("{report}");
           io::stdout().flush()?;
 
-          total_bytes += report.bytes;
-          total_projects += 1;
+          if self.dry_run {
+            total_bytes += report.bytes;
+            total_projects += 1;
+          } else {
+            let mut project_bytes = 0;
+            let mut project_executed = false;
+
+            for task in &report.tasks {
+              if self.interactive {
+                let prompt = match task {
+                  Task::Command(command) => format!(
+                    "Run {} in {}?",
+                    style.apply(YELLOW, command),
+                    style.apply(CYAN, context.root.display())
+                  ),
+                  Task::Remove { path, size } => format!(
+                    "Remove {} ({}) in {}?",
+                    style.apply(CYAN, path.display()),
+                    style.apply(GREEN, Bytes(*size)),
+                    style.apply(DIM, context.root.display())
+                  ),
+                };
+
+                if !Confirm::with_theme(&prompt_theme)
+                  .with_prompt(prompt)
+                  .default(true)
+                  .interact()?
+                {
+                  continue;
+                }
+              }
+
+              task.execute(&context)?;
+              project_executed = true;
+
+              if let Task::Remove { size, .. } = task {
+                project_bytes += *size;
+              }
+            }
+
+            if project_executed {
+              total_bytes += project_bytes;
+              total_projects += 1;
+            }
+          }
         }
       }
     }
