@@ -36,3 +36,84 @@ impl SystemTimeExt for SystemTime {
     format!("{days} day{} ago", plural_suffix(days))
   }
 }
+
+#[cfg(test)]
+mod tests {
+  use super::*;
+
+  fn ago(duration: Duration) -> SystemTime {
+    SystemTime::now() - duration
+  }
+
+  #[test]
+  fn format_zero_seconds() {
+    assert_eq!(ago(Duration::from_secs(0)).format(), "0 seconds ago");
+  }
+
+  #[test]
+  fn format_one_second() {
+    assert_eq!(ago(Duration::from_secs(1)).format(), "1 second ago");
+  }
+
+  #[test]
+  fn format_59_seconds() {
+    assert_eq!(ago(Duration::from_secs(59)).format(), "59 seconds ago");
+  }
+
+  #[test]
+  fn format_one_minute() {
+    assert_eq!(ago(Duration::from_secs(60)).format(), "1 minute ago");
+  }
+
+  #[test]
+  fn format_multiple_minutes() {
+    assert_eq!(ago(Duration::from_secs(5 * 60)).format(), "5 minutes ago");
+  }
+
+  #[test]
+  fn format_59_minutes() {
+    assert_eq!(ago(Duration::from_secs(59 * 60)).format(), "59 minutes ago");
+  }
+
+  #[test]
+  fn format_one_hour() {
+    assert_eq!(ago(Duration::from_secs(60 * 60)).format(), "1 hour ago");
+  }
+
+  #[test]
+  fn format_multiple_hours() {
+    assert_eq!(
+      ago(Duration::from_secs(12 * 60 * 60)).format(),
+      "12 hours ago"
+    );
+  }
+
+  #[test]
+  fn format_23_hours() {
+    assert_eq!(
+      ago(Duration::from_secs(23 * 60 * 60)).format(),
+      "23 hours ago"
+    );
+  }
+
+  #[test]
+  fn format_one_day() {
+    assert_eq!(ago(Duration::from_secs(24 * 60 * 60)).format(), "1 day ago");
+  }
+
+  #[test]
+  fn format_multiple_days() {
+    assert_eq!(
+      ago(Duration::from_secs(7 * 24 * 60 * 60)).format(),
+      "7 days ago"
+    );
+  }
+
+  #[test]
+  fn format_future_time_returns_zero() {
+    assert_eq!(
+      (SystemTime::now() + Duration::from_secs(60)).format(),
+      "0 seconds ago"
+    );
+  }
+}
