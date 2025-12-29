@@ -1,10 +1,10 @@
 use super::*;
 
-pub(crate) struct Zig;
-
-impl Rule for Zig {
-  fn actions(&self) -> &[Action] {
-    &[
+define_rule! {
+  Zig {
+    id: "zig",
+    name: "Zig",
+    actions: [
       Action::Remove {
         pattern: "zig-cache",
         reason: "Zig cache",
@@ -17,18 +17,9 @@ impl Rule for Zig {
         pattern: "zig-out",
         reason: "Zig build output",
       },
-    ]
-  }
-
-  fn applies(&self, context: &Context) -> bool {
-    context.files.contains(&PathBuf::from("build.zig"))
-  }
-
-  fn id(&self) -> &'static str {
-    "zig"
-  }
-
-  fn name(&self) -> &'static str {
-    "Zig"
+    ],
+    applies(context) {
+      context.files.contains(&PathBuf::from("build.zig"))
+    }
   }
 }

@@ -1,10 +1,10 @@
 use super::*;
 
-pub(crate) struct Node;
-
-impl Rule for Node {
-  fn actions(&self) -> &[Action] {
-    &[
+define_rule! {
+  Node {
+    id: "node",
+    name: "Node",
+    actions: [
       Action::Remove {
         pattern: "node_modules",
         reason: "Node dependencies",
@@ -13,18 +13,9 @@ impl Rule for Node {
         pattern: ".angular",
         reason: "Angular cache",
       },
-    ]
-  }
-
-  fn applies(&self, context: &Context) -> bool {
-    context.files.contains(&PathBuf::from("package.json"))
-  }
-
-  fn id(&self) -> &'static str {
-    "node"
-  }
-
-  fn name(&self) -> &'static str {
-    "Node"
+    ],
+    applies(context) {
+      context.files.contains(&PathBuf::from("package.json"))
+    }
   }
 }
