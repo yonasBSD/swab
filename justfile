@@ -46,6 +46,10 @@ install:
 publish:
   ./bin/publish
 
+[group: 'release']
+readme:
+  present --in-place README.md
+
 [group: 'dev']
 run *args:
   cargo run {{ args }}

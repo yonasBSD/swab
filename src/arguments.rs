@@ -1,7 +1,14 @@
 use super::*;
 
 #[derive(Debug, Parser)]
+#[command(
+  name = "swab",
+  version,
+  author,
+  about = "A configurable project cleaning tool"
+)]
 pub(crate) struct Arguments {
+  #[arg(help = "Directories to scan for projects to clean")]
   directories: Vec<PathBuf>,
   #[clap(long, help = "Enable dry run mode")]
   dry_run: bool,
