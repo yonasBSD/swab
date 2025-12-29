@@ -5,7 +5,7 @@ define_rule! {
     id: "node",
     name: "Node",
     actions: [
-      Action::Remove("node_modules"),
+      Action::Remove("**/node_modules"),
       Action::Remove(".angular"),
     ],
     applies(context) {

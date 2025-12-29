@@ -1,8 +1,9 @@
 use super::*;
 
 static RULES: &[&dyn Rule] = &[
-  &Cabal, &Cargo, &Cmake, &Composer, &Elixir, &Godot, &Gradle, &Maven, &Node,
-  &Pixi, &Pub, &Sbt, &Stack, &Swift, &Turborepo, &Unity, &Zig,
+  &Cabal, &Cargo, &Cmake, &Composer, &Dotnet, &Elixir, &Godot, &Gradle,
+  &Jupyter, &Maven, &Node, &Pixi, &Pub, &Python, &Sbt, &Stack, &Swift,
+  &Turborepo, &Unity, &Unreal, &Zig,
 ];
 
 #[derive(Debug, Parser)]

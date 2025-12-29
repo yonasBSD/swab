@@ -42,6 +42,14 @@ impl TryFrom<PathBuf> for Context {
 }
 
 impl Context {
+  pub(crate) fn has_file_with_extension(&self, extension: &str) -> bool {
+    self.files.iter().any(|file| {
+      file
+        .extension()
+        .is_some_and(|candidate_extension| candidate_extension == extension)
+    })
+  }
+
   pub(crate) fn matches(&self, rule: &dyn Rule) -> Result<Vec<PathBuf>> {
     let matchers = rule
       .actions()
