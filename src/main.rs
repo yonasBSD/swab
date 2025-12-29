@@ -1,11 +1,11 @@
 use {
-  action::Action::{self, *},
+  action::Action,
   anyhow::{Error, anyhow, bail, ensure},
   arguments::Arguments,
   bytes::Bytes,
   clap::Parser,
   context::Context,
-  detection::Detection::{self, *},
+  detection::Detection,
   globset::Glob,
   path_ext::PathExt,
   report::Report,

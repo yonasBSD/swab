@@ -11,6 +11,6 @@ define_rule! {
       Action::Remove("DerivedDataCache"),
       Action::Remove("Intermediate"),
     ],
-    detection: Pattern("**/*.uproject")
+    detection: Detection::Pattern("**/*.uproject")
   }
 }

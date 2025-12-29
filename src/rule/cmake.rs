@@ -9,6 +9,6 @@ define_rule! {
       Action::Remove("cmake-build-debug"),
       Action::Remove("cmake-build-release"),
     ],
-    detection: Pattern("CMakeLists.txt")
+    detection: Detection::Pattern("CMakeLists.txt")
   }
 }

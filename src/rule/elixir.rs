@@ -10,6 +10,6 @@ define_rule! {
       Action::Remove(".elixir_ls"),
       Action::Remove(".lexical"),
     ],
-    detection: Pattern("mix.exs")
+    detection: Detection::Pattern("mix.exs")
   }
 }

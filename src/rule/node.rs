@@ -8,6 +8,6 @@ define_rule! {
       Action::Remove("**/node_modules"),
       Action::Remove(".angular"),
     ],
-    detection: Pattern("package.json")
+    detection: Detection::Pattern("package.json")
   }
 }

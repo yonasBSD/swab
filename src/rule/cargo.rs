@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("**/target"),
     ],
-    detection: Pattern("Cargo.toml")
+    detection: Detection::Pattern("Cargo.toml")
   }
 }

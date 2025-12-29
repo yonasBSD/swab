@@ -10,6 +10,6 @@ define_rule! {
       Action::Remove("linux/flutter/ephemeral"),
       Action::Remove("windows/flutter/ephemeral"),
     ],
-    detection: Pattern("pubspec.yaml")
+    detection: Detection::Pattern("pubspec.yaml")
   }
 }

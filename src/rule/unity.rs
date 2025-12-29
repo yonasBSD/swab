@@ -13,6 +13,6 @@ define_rule! {
       Action::Remove("Build"),
       Action::Remove("Builds"),
     ],
-    detection: Pattern("Assembly-CSharp.csproj")
+    detection: Detection::Pattern("Assembly-CSharp.csproj")
   }
 }

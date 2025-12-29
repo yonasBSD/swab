@@ -14,6 +14,6 @@ define_rule! {
       Action::Remove("__pycache__"),
       Action::Remove("__pypackages__"),
     ],
-    detection: Pattern("pyproject.toml")
+    detection: Detection::Pattern("pyproject.toml")
   }
 }

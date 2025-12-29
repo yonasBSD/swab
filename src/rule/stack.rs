@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".stack-work"),
     ],
-    detection: Pattern("stack.yaml")
+    detection: Detection::Pattern("stack.yaml")
   }
 }

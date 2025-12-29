@@ -8,6 +8,6 @@ define_rule! {
       Action::Remove(".build"),
       Action::Remove(".swiftpm"),
     ],
-    detection: Pattern("Package.swift")
+    detection: Detection::Pattern("Package.swift")
   }
 }

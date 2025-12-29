@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".turbo"),
     ],
-    detection: Pattern("turbo.json")
+    detection: Detection::Pattern("turbo.json")
   }
 }

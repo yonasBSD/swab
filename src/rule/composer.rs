@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("vendor"),
     ],
-    detection: Pattern("composer.json")
+    detection: Detection::Pattern("composer.json")
   }
 }

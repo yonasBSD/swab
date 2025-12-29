@@ -9,6 +9,6 @@ define_rule! {
       Action::Remove(".zig-cache"),
       Action::Remove("zig-out"),
     ],
-    detection: Pattern("build.zig")
+    detection: Detection::Pattern("build.zig")
   }
 }

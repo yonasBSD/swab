@@ -162,7 +162,7 @@ mod tests {
     }
 
     fn detection(&self) -> Detection<'static> {
-      Pattern("**")
+      Detection::Pattern("**")
     }
 
     fn id(&self) -> &'static str {

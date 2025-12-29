@@ -8,6 +8,6 @@ define_rule! {
       Action::Remove("target"),
       Action::Remove("project/target"),
     ],
-    detection: Pattern("build.sbt")
+    detection: Detection::Pattern("build.sbt")
   }
 }

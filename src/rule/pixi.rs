@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".pixi"),
     ],
-    detection: Pattern("pixi.toml")
+    detection: Detection::Pattern("pixi.toml")
   }
 }

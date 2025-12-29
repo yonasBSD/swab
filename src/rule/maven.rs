@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("target"),
     ],
-    detection: Pattern("pom.xml")
+    detection: Detection::Pattern("pom.xml")
   }
 }

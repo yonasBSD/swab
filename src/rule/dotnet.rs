@@ -8,14 +8,14 @@ define_rule! {
       Action::Remove("bin"),
       Action::Remove("obj"),
     ],
-    detection: All(
-      Box::new(Any(
-        Box::new(Pattern("**/*.csproj")),
-        Box::new(Pattern("**/*.fsproj")),
+    detection: Detection::All(
+      Box::new(Detection::Any(
+        Box::new(Detection::Pattern("**/*.csproj")),
+        Box::new(Detection::Pattern("**/*.fsproj")),
       )),
-      Box::new(All(
-        Box::new(Not(Box::new(Pattern("Assembly-CSharp.csproj")))),
-        Box::new(Not(Box::new(Pattern("project.godot")))),
+      Box::new(Detection::All(
+        Box::new(Detection::Not(Box::new(Detection::Pattern("Assembly-CSharp.csproj")))),
+        Box::new(Detection::Not(Box::new(Detection::Pattern("project.godot")))),
       )),
     )
   }

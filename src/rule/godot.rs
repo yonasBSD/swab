@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove(".godot"),
     ],
-    detection: Pattern("project.godot")
+    detection: Detection::Pattern("project.godot")
   }
 }

@@ -5,8 +5,8 @@ define_rule! {
     id: "cabal",
     name: "Cabal (Haskell)",
     actions: [
-      Remove("dist-newstyle"),
+      Action::Remove("dist-newstyle"),
     ],
-    detection: Pattern("cabal.project")
+    detection: Detection::Pattern("cabal.project")
   }
 }

@@ -7,6 +7,6 @@ define_rule! {
     actions: [
       Action::Remove("**/.ipynb_checkpoints"),
     ],
-    detection: Pattern("**/*.ipynb")
+    detection: Detection::Pattern("**/*.ipynb")
   }
 }
