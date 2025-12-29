@@ -94,7 +94,7 @@ impl TryFrom<(&Context, &dyn Rule)> for Report {
       bytes: total_bytes,
       commands,
       items,
-      modified: context.modified_time(),
+      modified: context.modified_time()?,
       root: context.root.clone(),
       rule_name: rule.name().to_string(),
     })

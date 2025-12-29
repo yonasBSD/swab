@@ -91,9 +91,7 @@ impl Context {
     Ok(pruned)
   }
 
-  pub(crate) fn modified_time(&self) -> SystemTime {
-    fs::metadata(&self.root)
-      .and_then(|metadata| metadata.modified())
-      .unwrap_or_else(|_| SystemTime::now())
+  pub(crate) fn modified_time(&self) -> Result<SystemTime> {
+    Ok(fs::metadata(&self.root)?.modified()?)
   }
 }
