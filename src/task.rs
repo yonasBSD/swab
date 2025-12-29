@@ -3,7 +3,7 @@ use super::*;
 #[derive(Debug)]
 pub(crate) enum Task {
   Command(&'static str),
-  Removal { path: PathBuf, size: u64 },
+  Remove { path: PathBuf, size: u64 },
 }
 
 impl Task {
@@ -30,7 +30,7 @@ impl Task {
 
         Ok(())
       }
-      Task::Removal { path, .. } => {
+      Task::Remove { path, .. } => {
         let full_path = context.root.join(path);
 
         ensure!(

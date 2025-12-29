@@ -132,7 +132,7 @@ impl Context {
 
       total_bytes += bytes;
 
-      tasks.push(Task::Removal {
+      tasks.push(Task::Remove {
         path: relative_path,
         size: bytes,
       });

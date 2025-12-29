@@ -42,7 +42,7 @@ impl Display for Report {
             style.apply(YELLOW, command),
           )?;
         }
-        Task::Removal { path, size } => {
+        Task::Remove { path, size } => {
           writeln!(
             f,
             "  {} {} {}",
